@@ -1,0 +1,32 @@
+{
+  "name": "mini-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "run": "node src/index.js",
+    "dev": "npm run migrate:up && nodemon src/index.js",
+    "migrate:up" : "node ./bin/migrate.js up",
+    "test": "test",
+    "migrate": "node ./bin/migrate.js",
+    "migrate:create": "migrate create --migrations-dir='./src/database/migrations'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dugouchet/mini-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dugouchet/mini-project/issues"
+  },
+  "homepage": "https://github.com/dugouchet/mini-project#readme",
+  "dependencies": {
+    "express": "4.17.1",
+    "migrate": "1.6.2",
+    "nodemon": "2.0.4",
+    "pg": "8.2.1",
+    "sql-template-strings": "2.2.2",
+    "uuid": "8.1.0"
+  }
+}
