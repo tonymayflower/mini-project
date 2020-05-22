@@ -1,30 +1,13 @@
 const express = require('express')
 const app = express()
-const db = require('./database/db');
-const sql = require('sql-template-strings');
-const { v4: uuidv4 } = require('uuid');
+const api = require('./api');
 
-app.get('/list', function (req, res) {
-    db.query(sql`
-    SELECT * FROM users LIMIT 1;
-    `)
-    .then(({rows}) => {
-        console.log(rows)
-        return rows;
+app.get('/', (req, res) => res.sendStatus(200));
+app.get('/health', (req, res) => res.sendStatus(200));
 
-    })
-    .then(res.send.bind(res))
-})
+app.use(express.json());
 
-app.get('/insert', function (req, res) {
-    
-    res.send(
-      db.query(sql`INSERT INTO users (id, email, password)
-      VALUES (${uuidv4()}, 'mich@gmail.com', 'password')
-      RETURNING id, email;
-    `)
-    )
-  })
+app.use(api);
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

@@ -1,2 +1,10 @@
 .migrate
 node_modules/
+factory-worker/node_modules/
+
+
+factory-worker/
+
+
+
+package-lock.json
