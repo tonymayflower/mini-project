@@ -2,9 +2,11 @@ const {Router} = require('express');
 
 const router = new Router();
 const {User} = require('../model')
-// const {publishToQueue} = require('../producer')
+const {publishToQueue} = require('../producer/index')
 
-router.get('/list', (req, res) => {
+router.get('/list', async (req, res) => {
+  await publishToQueue("myconsumqueue","mypayload");
+
     return User
     .list()
     .then(res.send.bind(res))
