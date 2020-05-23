@@ -19,6 +19,5 @@ module.exports.create = async ({email, password}) => {
     VALUES (${uuidv4()}, ${email}, ${hashedPassword})
     RETURNING id, email;
   `)
-  .then(console.log)
-  
+  .then(({rows}) => rows[0]) 
 }

@@ -16,11 +16,11 @@ module.exports.create = async ({numberOfFigures, price, userUuid}) => {
     VALUES (${uuidv4()}, ${numberOfFigures}, ${price}, ${userUuid})
     RETURNING id, numberOfFigures, price, userUuid;
   `)
-  .then(console.log)
+  .then(({rows}) => rows[0])
   
 }
 
 module.exports.updateStatus = async ({orderUuid, status}) => {
   return db.query(sql`UPDATE orders set status = ${status} WHERE id = ${orderUuid}`)
-.then(console.log)  
+  .then(({rows}) => rows[0])
 }

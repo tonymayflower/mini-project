@@ -15,7 +15,6 @@ module.exports.listFromOrder = ({orderUuid}) => {
   return db.query(sql`
   SELECT * FROM figures where orderUuid=${orderUuid} limit 100;
   `)
-  .then(({rows}) => rows)
 }
 
 module.exports.create = async ({profile, status, orderUuid}) => {
@@ -24,10 +23,9 @@ module.exports.create = async ({profile, status, orderUuid}) => {
     VALUES (${uuidv4()}, ${profile}, ${status}, ${orderUuid})
     RETURNING id, profile, status, orderUuid;
   `)
-  .then(console.log)  
+  .then(({rows}) => rows[0])
 }
 
 module.exports.updateStatus = async ({figureUuid, status}) => {
   return db.query(sql`UPDATE figures set status = ${status} WHERE id = ${figureUuid}`)
-.then(console.log)  
 }

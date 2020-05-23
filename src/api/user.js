@@ -5,20 +5,25 @@ const {User} = require('../model')
 const {publishToQueue} = require('../producer/index')
 
 router.get('/list', async (req, res) => {
-  await publishToQueue("myconsumqueue","mypayload");
-
     return User
     .list()
     .then(res.send.bind(res))
+    .catch((err)=>{
+      return res.status(500).send({ error: 'Something failed!' });
+     }) 
   });
   
 router.post('/insert', (req, res) => {
     const {email, password} = req.body
     
-   return  res.send(User.create({
+   return  User.create({
     email,
     password
-   }))      
+   })
+   .then(res.send.bind(res)) 
+   .catch((err)=>{
+    return res.status(500).send({ error: 'Something failed!' });
+   }) 
 })
 
 module.exports = router;
