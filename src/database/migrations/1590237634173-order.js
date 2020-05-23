@@ -5,10 +5,12 @@ module.exports.up = async function(next) {
   const client = await db.connect();
 
   await client.query(`
-  CREATE TABLE IF NOT EXISTS users (
+  CREATE TYPE order_status_t AS ENUM ('SENT', 'READY', 'DEIVERED');
+  CREATE TABLE IF NOT EXISTS orders (
     id uuid PRIMARY KEY,
-    email text UNIQUE,
-    password text
+    numberOfFigures INT NOT NULL,
+    price INT,
+    status order_status_t
   );
   `);
 
@@ -20,7 +22,7 @@ module.exports.down = async function(next) {
   const client = await db.connect();
 
   await client.query(`
-    DROP TABLE users;
+    DROP TABLE orders;
   `);
 
   await client.release(true);

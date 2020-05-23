@@ -5,11 +5,8 @@ module.exports.up = async function(next) {
   const client = await db.connect();
 
   await client.query(`
-  CREATE TABLE IF NOT EXISTS users (
-    id uuid PRIMARY KEY,
-    email text UNIQUE,
-    password text
-  );
+    ALTER TABLE figures ADD orderUuid uuid NOT NULL;
+    ALTER TABLE figures ADD CONSTRAINT FK_figureorder FOREIGN KEY(orderUuid) REFERENCES orders(id);
   `);
 
   await client.release(true);
@@ -20,7 +17,7 @@ module.exports.down = async function(next) {
   const client = await db.connect();
 
   await client.query(`
-    DROP TABLE users;
+    DROP TABLE figures;
   `);
 
   await client.release(true);
