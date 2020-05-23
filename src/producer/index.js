@@ -10,12 +10,12 @@ function bail(err) {
 amqp.connect(process.env.MESSAGE_QUEUE, function (err, conn) {
     if (err != null) bail(err);
     conn.createChannel(function (err, channel) {
-        console.log("channel", channel)
         ch = channel;
     });
 });
 
 async function publishToQueue (queueName, data) {
-    ch.sendToQueue(queueName, new Buffer(data), {persistent: true});
+    ch.sendToQueue(queueName, Buffer.from((data), {persistent: true}));
+    console.log('msg sent')
 }
 module.exports.publishToQueue = publishToQueue;
