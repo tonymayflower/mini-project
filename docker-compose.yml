@@ -32,7 +32,7 @@ services:
     command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "npm", "run", "dev"]  
     #command: npm run dev
     volumes:
-      - ./factory-worker/:/worker/
+      - ./factory-worker:/worker/
       - /worker/node_modules
       
   postgres:

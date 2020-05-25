@@ -1,4 +1,4 @@
-  
+
 const path = require('path');
 const migrate = require('migrate');
 
@@ -10,7 +10,7 @@ new Promise((resolve, reject) => {
   migrate.load(
     {
       stateStore: '.migrate',
-      migrationsDirectory
+      migrationsDirectory,
     },
     (err, set) => {
       if (err) {
@@ -21,20 +21,18 @@ new Promise((resolve, reject) => {
         reject(new Error('Command is not a function'));
       }
 
-      set[command](err => {
-        if (err) reject(err);
+      set[command]((error) => {
+        if (error) reject(error);
         resolve();
       });
-    }
+    },
   );
 })
   .then(() => {
     console.log(`migrations "${command}" successfully ran`);
-    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(0);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error.stack);
-    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   });

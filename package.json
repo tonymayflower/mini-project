@@ -8,6 +8,7 @@
     "dev": "npm run migrate:up && nodemon src/index.js",
     "migrate:up": "node ./bin/migrate.js up",
     "test": "test",
+    "lint": "./node_modules/.bin/eslint",
     "migrate": "node ./bin/migrate.js",
     "migrate:create": "migrate create --migrations-dir='./src/database/migrations'"
   },
@@ -23,13 +24,25 @@
   "homepage": "https://github.com/dugouchet/mini-project#readme",
   "dependencies": {
     "amqplib": "0.5.6",
+    "babel-eslint": "10.1.0",
     "bcrypt": "4.0.1",
+    "bunyan": "1.8.12",
     "express": "4.17.1",
     "migrate": "1.6.2",
+    "morgan": "1.10.0",
     "nodemon": "2.0.4",
     "pg": "8.2.1",
     "sql-template-strings": "2.2.2",
     "uuid": "8.1.0",
     "wait-for-postgres": "1.5.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.0"
   }
 }

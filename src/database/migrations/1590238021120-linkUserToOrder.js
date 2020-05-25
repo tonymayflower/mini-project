@@ -1,7 +1,7 @@
-'use strict'
+
 const db = require('../db');
 
-module.exports.up = async function(next) {
+module.exports.up = async function (next) {
   const client = await db.connect();
 
   await client.query(`
@@ -13,7 +13,7 @@ module.exports.up = async function(next) {
   next();
 };
 
-module.exports.down = async function(next) {
+module.exports.down = async function (next) {
   const client = await db.connect();
 
   await client.query(`

@@ -1,0 +1,3 @@
+src/database/migration/*
+test/*
+factory-worker/*
