@@ -7,9 +7,25 @@ const router = new Router();
 const { Figure } = require('../model');
 const { publishToQueue } = require('../producer/index');
 
+  /**
+ * This function comment is parsed by doctrine
+ * @route GET /figure/list
+ * @group order - Operations about figure
+ * @returns {object} 200 - figure list
+ * @returns {Error}  default - Something failed!
+ */
+
 router.get('/list', (req, res) => Figure
   .list()
   .then(res.send.bind(res)));
+
+    /**
+ * This function comment is parsed by doctrine
+ * @route GET /figure/listFromOrder
+ * @group figure - Operations about figure
+ * @returns {object} 200 - figure list
+ * @returns {Error}  default - Something failed!
+ */
 router.get('/listFromOrder', async (req, res) => {
   const { orderUuid } = req.query;
 
@@ -17,6 +33,17 @@ router.get('/listFromOrder', async (req, res) => {
     .listFromOrder({ orderUuid })
     .then(res.send.bind(res));
 });
+
+  /**
+ * This function comment is parsed by doctrine
+ * @route POST /figure/insert
+ * @group figure - Operations about figure
+ * @param {string} profile.body.required - profile of figures
+ * @param {string} status.body.required - status of figure TODO, PROGRESS, DONE
+ * @param {string} userUuid.body.required - user's uuid
+ * @returns {object} 200 - user info
+ * @returns {Error}  default - Something failed!
+ */
 
 router.post('/insert', (req, res) => {
   const { profile, status = 'TODO', orderUuid } = req.body;
@@ -36,6 +63,15 @@ router.post('/insert', (req, res) => {
     });
 });
 
+  /**
+ * This function comment is parsed by doctrine
+ * @route POST /figure/insert
+ * @group figure - Operations about figure
+ * @param {string} orderUuid.body.required - figure's uuid
+ * @param {string} status.body.required - status of figure TODO, PROGRESS, DONE
+ * @returns {object} 200 - user info
+ * @returns {Error}  default - Something failed!
+ */
 router.post('/update', (req, res) => {
   const { figureUuid, status } = req.body;
   return Figure.updateStatus({
