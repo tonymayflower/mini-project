@@ -2,10 +2,11 @@ const express = require('express');
 
 const app = express();
 const morgan = require('morgan');
-const api = require('./api');
-const {logger} = require('./logger');
 const expressSwagger = require('express-swagger-generator')(app);
-const {swaggerDefinition} = require('./middleware/swagger');
+const api = require('./api');
+const { logger } = require('./logger');
+const { swaggerDefinition } = require('./middleware/swagger');
+
 expressSwagger(swaggerDefinition);
 
 // default & healthcheck routes

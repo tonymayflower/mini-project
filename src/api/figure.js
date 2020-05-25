@@ -1,16 +1,17 @@
 const { Router } = require('express');
 const { logger } = require('../logger');
 
-const { checkSchema } = require('express-validator');
+const figureSchema = require('../schemas/figure');
+const schemaValidate = require('../middleware/schemaValidate');
 
 const router = new Router();
 const { Figure } = require('../model');
 const { publishToQueue } = require('../producer/index');
 
-  /**
+/**
  * This function comment is parsed by doctrine
  * @route GET /figure/list
- * @group order - Operations about figure
+ * @group figure - Operations about figure
  * @returns {object} 200 - figure list
  * @returns {Error}  default - Something failed!
  */
@@ -19,7 +20,7 @@ router.get('/list', (req, res) => Figure
   .list()
   .then(res.send.bind(res)));
 
-    /**
+/**
  * This function comment is parsed by doctrine
  * @route GET /figure/listFromOrder
  * @group figure - Operations about figure
@@ -34,7 +35,7 @@ router.get('/listFromOrder', async (req, res) => {
     .then(res.send.bind(res));
 });
 
-  /**
+/**
  * This function comment is parsed by doctrine
  * @route POST /figure/insert
  * @group figure - Operations about figure
@@ -45,7 +46,7 @@ router.get('/listFromOrder', async (req, res) => {
  * @returns {Error}  default - Something failed!
  */
 
-router.post('/insert', (req, res) => {
+router.post('/insert', schemaValidate(figureSchema.insertFigure), (req, res) => {
   const { profile, status = 'TODO', orderUuid } = req.body;
   return Figure.create({
     profile,
@@ -63,7 +64,7 @@ router.post('/insert', (req, res) => {
     });
 });
 
-  /**
+/**
  * This function comment is parsed by doctrine
  * @route POST /figure/insert
  * @group figure - Operations about figure
@@ -72,7 +73,7 @@ router.post('/insert', (req, res) => {
  * @returns {object} 200 - user info
  * @returns {Error}  default - Something failed!
  */
-router.post('/update', (req, res) => {
+router.post('/insert', schemaValidate(figureSchema.updateFigure), (req, res) => {
   const { figureUuid, status } = req.body;
   return Figure.updateStatus({
     figureUuid,

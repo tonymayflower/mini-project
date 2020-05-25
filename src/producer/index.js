@@ -1,5 +1,5 @@
 const amqp = require('amqplib/callback_api');
-const {logger} = require('../logger');
+const { logger } = require('../logger');
 
 let ch = null;
 

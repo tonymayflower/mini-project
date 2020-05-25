@@ -8,9 +8,11 @@ module.exports.list = () => db.query(sql`
     `)
   .then(({ rows }) => rows);
 // todo ajouter le lien vers le user
-module.exports.create = async ({ numberOfFigures, price, userUuid }) => db.query(sql`INSERT INTO orders (id, numberOfFigures, price, userUuid)
-    VALUES (${uuidv4()}, ${numberOfFigures}, ${price}, ${userUuid})
-    RETURNING id, numberOfFigures, price, userUuid;
+module.exports.create = async ({
+  numberOfFigures, pack, price, userUuid,
+}) => db.query(sql`INSERT INTO orders (id, numberOfFigures, pack, price, userUuid)
+    VALUES (${uuidv4()}, ${numberOfFigures}, ${pack}, ${price}, ${userUuid})
+    RETURNING id, numberOfFigures, pack, price, userUuid;
   `)
   .then(({ rows }) => rows[0]);
 

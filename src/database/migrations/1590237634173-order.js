@@ -9,6 +9,7 @@ module.exports.up = async function (next) {
   CREATE TABLE IF NOT EXISTS orders (
     id uuid PRIMARY KEY,
     numberOfFigures INT NOT NULL,
+    pack text,
     price INT,
     status order_status_t
   );

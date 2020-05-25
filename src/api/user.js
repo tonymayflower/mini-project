@@ -1,14 +1,16 @@
 const { Router } = require('express');
 const { logger } = require('../logger');
+
 const router = new Router();
 const { User } = require('../model');
 const userSchema = require('../schemas/user');
-const schemaValidate = require('../middleware/schemaValidate')
+const schemaValidate = require('../middleware/schemaValidate');
 
 
-  /**
+/**
  * This function comment is parsed by doctrine
  * @route GET /user/list
+ * @group user - Operations about user
  * @returns {object} 200 - user list
  * @returns {Error}  default - Something failed!
  */
@@ -21,7 +23,7 @@ router.get('/list', async (req, res) => User
     return res.status(500).send({ error: 'Something failed!' });
   }));
 
-  /**
+/**
  * This function comment is parsed by doctrine
  * @route POST /user/insert
  * @group user - Operations about user
@@ -31,7 +33,7 @@ router.get('/list', async (req, res) => User
  * @returns {Error}  default - Something failed!
  */
 
-router.post('/insert',schemaValidate(userSchema.insertUser),(req, res) => {
+router.post('/insert', schemaValidate(userSchema.insertUser), (req, res) => {
   const { email, password } = req.body;
 
   return User.create({
