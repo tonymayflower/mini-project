@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const { logger } = require('../logger');
 
+const { checkSchema } = require('express-validator');
+
 const router = new Router();
 const { Figure } = require('../model');
 const { publishToQueue } = require('../producer/index');

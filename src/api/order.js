@@ -8,7 +8,7 @@ router.get('/list', (req, res) => Order
   .list()
   .then(res.send.bind(res))
   .catch((err) => {
-    logger.err(err);
+    logger.error(err);
     return res.status(500).send({ error: 'Something failed!' });
   }));
 
@@ -22,7 +22,7 @@ router.post('/insert', (req, res) => {
   })
     .then(res.send.bind(res))
     .catch((err) => {
-      logger.err(err);
+      logger.error(err);
       return res.status(500).send({ error: 'Something failed!' });
     });
 });
@@ -36,7 +36,7 @@ router.post('/update', (req, res) => {
   })
     .then(res.send.bind(res))
     .catch((err) => {
-      logger.err(err);
+      logger.error(err);
       return res.status(500).send({ error: 'Something failed!' });
     });
 });

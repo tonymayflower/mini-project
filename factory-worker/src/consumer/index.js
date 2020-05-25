@@ -1,6 +1,6 @@
 const open = require('amqplib').connect(process.env.MESSAGE_QUEUE);
 const axios = require('axios');
-const logger = require('../logger');
+const {logger} = require('../logger');
 
 const timeToBuildFigure = 2000;
 const q = 'figureCreated';

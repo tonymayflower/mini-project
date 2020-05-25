@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const morgan = require('morgan');
-const logger = require('./src/logger');
+const {logger} = require('./src/logger');
 const { consume } = require('./src/consumer');
 
 // default & healthcheck routes

@@ -2,7 +2,7 @@
 const sql = require('sql-template-strings');
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database/db');
-const logger = require('../logger');
+const {logger} = require('../logger');
 
 module.exports.list = () => db.query(sql`
     SELECT * FROM figures limit 100;
@@ -11,7 +11,9 @@ module.exports.list = () => db.query(sql`
 
 module.exports.listFromOrder = ({ orderUuid }) => db.query(sql`
   SELECT * FROM figures where orderUuid=${orderUuid} limit 100;
-  `);
+  `)
+  .then(({ rows }) => rows);
+  ;
 
 module.exports.create = async ({ profile, status, orderUuid }) => db.query(sql`INSERT INTO figures (id, profile, status, orderUuid)
     VALUES (${uuidv4()}, ${profile}, ${status}, ${orderUuid})
