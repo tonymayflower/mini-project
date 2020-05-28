@@ -12,11 +12,16 @@ help:
 
 
 .PHONY: run
-# run
+# run app 
 run: clean
-	docker-compose down && docker-compose build --no-cache && docker-compose up
+	docker-compose down && docker-compose build --no-cache && docker-compose up	
+
+.PHONY: test
+# test app
+test: clean
+	docker-compose -f docker-compose-test.yml down && docker-compose  -f docker-compose-test.yml build --no-cache && docker-compose -f docker-compose-test.yml up
 
 .PHONY: clean
-# clean
+# clean migrations
 clean:
 	rm .migrate || true

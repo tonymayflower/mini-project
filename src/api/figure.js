@@ -5,7 +5,7 @@ const figureSchema = require('../schemas/figure');
 const schemaValidate = require('../middleware/schemaValidate');
 
 const router = new Router();
-const { Figure } = require('../model');
+const { Figure, Order } = require('../model');
 const { publishToQueue } = require('../producer/index');
 
 /**
@@ -41,7 +41,7 @@ router.get('/listFromOrder', async (req, res) => {
  * @group figure - Operations about figure
  * @param {string} profile.body.required - profile of figures
  * @param {string} status.body.required - status of figure TODO, PROGRESS, DONE
- * @param {string} userUuid.body.required - user's uuid
+ * @param {string} orderUuid.body.required - user's uuid
  * @returns {object} 200 - user info
  * @returns {Error}  default - Something failed!
  */
@@ -66,19 +66,46 @@ router.post('/insert', schemaValidate(figureSchema.insertFigure), (req, res) => 
 
 /**
  * This function comment is parsed by doctrine
- * @route POST /figure/insert
+ * @route POST /figure/update
  * @group figure - Operations about figure
  * @param {string} orderUuid.body.required - figure's uuid
  * @param {string} status.body.required - status of figure TODO, PROGRESS, DONE
  * @returns {object} 200 - user info
  * @returns {Error}  default - Something failed!
  */
-router.post('/insert', schemaValidate(figureSchema.updateFigure), (req, res) => {
+router.post('/update', schemaValidate(figureSchema.updateFigure), (req, res) => {
   const { figureUuid, status } = req.body;
+  let figureUpdated;
+
   return Figure.updateStatus({
     figureUuid,
     status,
   })
+  .then(async(res)=> {
+    figureUpdated = res;
+    let orderUuid = res.orderuuid;
+    // get all figures from the order
+    let figures = await Figure.listFromOrder({orderUuid});
+    let isOrderReady=false
+
+    // check if all figures of the order are ready
+    figures.forEach(el => {
+      if (el.status === 'DONE') {
+          return isOrderReady=true
+      }
+      return   isOrderReady=false
+    })
+
+    // if the order is ready, update the status of the order and send an event OrderReady
+      if (isOrderReady) {
+        await Order.updateStatus({
+          orderUuid,
+          status: 'READY'
+        })
+        .then((order)=>publishToQueue('OrderReady', JSON.stringify(order)))        
+      }
+      return figureUpdated;
+    })
     .then(res.send.bind(res))
     .catch((err) => {
       logger.error(err);

@@ -17,6 +17,4 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(api);
 
-app.listen(3000, () => {
-  logger.info('api listening on port 3000!');
-});
+module.exports = app;

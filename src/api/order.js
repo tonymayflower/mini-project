@@ -32,7 +32,7 @@ router.get('/list', (req, res) => Order
  * @returns {Error}  default - Something failed!
  */
 
-router.post('/insert', schemaValidate(orderSchema.insertorder), (req, res) => {
+router.post('/insert', schemaValidate(orderSchema.insertOrder), (req, res) => {
   const { numberOfFigures, pack, userUuid } = req.body;
 
   const famillyPack = 'MiNi-Familly-Pack';
@@ -43,9 +43,14 @@ router.post('/insert', schemaValidate(orderSchema.insertorder), (req, res) => {
     unitPrice = 9;
   }
   let price = unitPrice * numberOfFigures;
-  if (pack === famillyPack) {
-    price *= 0, 8;
+  logger.info('price', price)
+  logger.info('numberOfFigures', numberOfFigures)
+  if (pack.toString() === famillyPack.toString()) {
+    price = price * 0.8;
   }
+
+  logger.info('price', price)
+  
   return Order.create({
     numberOfFigures,
     pack,
@@ -68,7 +73,7 @@ router.post('/insert', schemaValidate(orderSchema.insertorder), (req, res) => {
  * @returns {object} 200 - user info
  * @returns {Error}  default - Something failed!
  */
-router.post('/insert', schemaValidate(orderSchema.updateOrder), (req, res) => {
+router.post('/update', schemaValidate(orderSchema.updateOrder), (req, res) => {
   const { orderUuid, status } = req.body;
 
   return Order.updateStatus({

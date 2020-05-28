@@ -5,7 +5,7 @@ module.exports.up = async function (next) {
   const client = await db.connect();
 
   await client.query(`
-  CREATE TYPE order_status_t AS ENUM ('SENT', 'READY', 'DEIVERED');
+  CREATE TYPE order_status_t AS ENUM ('SENT', 'READY', 'DELIVERED');
   CREATE TABLE IF NOT EXISTS orders (
     id uuid PRIMARY KEY,
     numberOfFigures INT NOT NULL,
