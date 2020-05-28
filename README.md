@@ -1,7 +1,7 @@
 # mini-project
 Welcome to mini project.
 
-This repo contains the mini API.
+This repo contains the mini projet ( MINI API - Factory worker).
 
 The api is able to :
     * Create a user and list them
@@ -23,3 +23,17 @@ The api is able to :
     * be more resilient
         - add more details error managment
     * add more logs
+
+
+# CD
+You need to have docker install :
+```
+    make run 
+````
+# Test
+You need to have docker install :
+```
+    make test 
+````
+
+
