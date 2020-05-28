@@ -83,6 +83,9 @@ router.post('/update', schemaValidate(orderSchema.updateOrder), (req, res) => {
     .then(res.send.bind(res))
     .catch((err) => {
       logger.error(err);
+      if (err.message === 'ORDER NOT FOUND') {
+        return res.status(404).send({ error: 'ORDER NOT FOUND' });
+      }
       return res.status(500).send({ error: 'Something failed!' });
     });
 });

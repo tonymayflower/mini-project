@@ -19,7 +19,7 @@ module.exports.create = async ({
 module.exports.updateStatus = async ({ orderUuid, status }) => db.query(sql`UPDATE orders set status = ${status} WHERE id = ${orderUuid}`)
   .then(({ rowCount }) => {
     if (rowCount === 0) {
-      throw new Error('FIGURE NOT FOUND');
+      throw new Error('ORDER NOT FOUND');
     }
     return { orderUuid, status };
   });

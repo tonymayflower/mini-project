@@ -108,6 +108,9 @@ router.post('/update', schemaValidate(figureSchema.updateFigure), (req, res) => 
     .then(res.send.bind(res))
     .catch((err) => {
       logger.error(err);
+      if (err.message === 'FIGURE NOT FOUND') {
+        return res.status(404).send({ error: 'FIGURE NOT FOUND' });
+      }
       return res.status(500).send({ error: 'Something failed!' });
     });
 });
