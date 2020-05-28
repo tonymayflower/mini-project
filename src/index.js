@@ -4,7 +4,6 @@ const app = express();
 const morgan = require('morgan');
 const expressSwagger = require('express-swagger-generator')(app);
 const api = require('./api');
-const { logger } = require('./logger');
 const { swaggerDefinition } = require('./middleware/swagger');
 
 expressSwagger(swaggerDefinition);

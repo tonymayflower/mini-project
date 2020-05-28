@@ -43,14 +43,14 @@ router.post('/insert', schemaValidate(orderSchema.insertOrder), (req, res) => {
     unitPrice = 9;
   }
   let price = unitPrice * numberOfFigures;
-  logger.info('price', price)
-  logger.info('numberOfFigures', numberOfFigures)
+  logger.info('price', price);
+  logger.info('numberOfFigures', numberOfFigures);
   if (pack.toString() === famillyPack.toString()) {
-    price = price * 0.8;
+    price *= 0.8;
   }
 
-  logger.info('price', price)
-  
+  logger.info('price', price);
+
   return Order.create({
     numberOfFigures,
     pack,

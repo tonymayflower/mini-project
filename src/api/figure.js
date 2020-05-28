@@ -75,36 +75,35 @@ router.post('/insert', schemaValidate(figureSchema.insertFigure), (req, res) => 
  */
 router.post('/update', schemaValidate(figureSchema.updateFigure), (req, res) => {
   const { figureUuid, status } = req.body;
-  let figureUpdated;
 
   return Figure.updateStatus({
     figureUuid,
     status,
   })
-  .then(async(res)=> {
-    figureUpdated = res;
-    let orderUuid = res.orderuuid;
-    // get all figures from the order
-    let figures = await Figure.listFromOrder({orderUuid});
-    let isOrderReady=false
+    .then(async (updatedFigure) => {
+      const orderUuid = updatedFigure.orderuuid;
+      // get all figures from the order
+      const figures = await Figure.listFromOrder({ orderUuid });
+      let isOrderReady = false;
 
-    // check if all figures of the order are ready
-    figures.forEach(el => {
-      if (el.status === 'DONE') {
-          return isOrderReady=true
-      }
-      return   isOrderReady=false
-    })
+      // check if all figures of the order are ready
+      figures.forEach((el) => {
+        if (el.status === 'DONE') {
+          isOrderReady = true;
+          return;
+        }
+        isOrderReady = false;
+      });
 
-    // if the order is ready, update the status of the order and send an event OrderReady
+      // if the order is ready, update the status of the order and send an event OrderReady
       if (isOrderReady) {
         await Order.updateStatus({
           orderUuid,
-          status: 'READY'
+          status: 'READY',
         })
-        .then((order)=>publishToQueue('OrderReady', JSON.stringify(order)))        
+          .then((order) => publishToQueue('OrderReady', JSON.stringify(order)));
       }
-      return figureUpdated;
+      return updatedFigure;
     })
     .then(res.send.bind(res))
     .catch((err) => {

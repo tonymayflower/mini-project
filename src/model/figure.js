@@ -22,7 +22,7 @@ module.exports.create = async ({ profile, status, orderUuid }) => db.query(sql`I
   .then(({ rows }) => rows[0]);
 
 module.exports.updateStatus = async ({ figureUuid, status }) => db.query(sql`UPDATE figures set status = ${status} WHERE id = ${figureUuid} RETURNING id, profile, status, orderUuid`)
-  .then(({rowCount, rows} ) => {
+  .then(({ rowCount, rows }) => {
     if (rowCount === 0) {
       logger.info('figure not found');
       throw new Error('FIGURE NOT FOUND');
