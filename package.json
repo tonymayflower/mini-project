@@ -24,7 +24,7 @@
   "homepage": "https://github.com/dugouchet/mini-project#readme",
   "dependencies": {
     "amqplib": "0.5.6",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "babel-eslint": "10.1.0",
     "bcrypt": "4.0.1",
     "bunyan": "1.8.12",
