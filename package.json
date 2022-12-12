@@ -28,7 +28,7 @@
     "babel-eslint": "10.1.0",
     "bcrypt": "4.0.1",
     "bunyan": "1.8.12",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "express-swagger-generator": "1.1.17",
     "express-validator": "6.5.0",
     "joi": "14.3.1",
