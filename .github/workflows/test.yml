@@ -1,10 +1,6 @@
 name: CI/CD Dev
 
-on:
-  push:
-    branches:
-      - 'development'
-
+on: [push]
 jobs:
   SSM:
     runs-on: ubuntu-latest
