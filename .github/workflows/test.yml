@@ -1,4 +1,4 @@
-name: CI/CD Dev
+name: test
 
 on: [push]
 jobs:
@@ -15,3 +15,6 @@ jobs:
           role-to-assume: arn:aws:iam::773202387157:role/github_ecs_access
           aws-region: eu-west-1
           role-session-name: BackendAPIBuild
+      - name: s3 ls
+        run: |
+          aws s3 ls
